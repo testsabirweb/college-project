@@ -60,10 +60,11 @@ socket.on('locationMSG', (message) => {
     autoScroll()
 })
 
-socket.on('roomData', ({ room, users }) => {
+socket.on('roomData', ({ room, users, userIsTyping }) => {
     const html = Mustache.render(sidebarTemplate, {
         room,
-        users
+        users,
+        userIsTyping
     })
     document.querySelector('#sidebar').innerHTML = html
 })
@@ -86,7 +87,18 @@ document.querySelector('#message-form').addEventListener('submit', (e) => {
     })
 })
 
-$sendLocationButton.addEventListener('click', (e) => {
+$messageFormInput.addEventListener('keypress', (e) => {//////////its actually onkeypress but on excluded
+    socket.emit('isTyping', () => {
+        //console.log(username+'is typing')
+    })
+})
+
+$messageFormInput.addEventListener('keyup', (e) => {//////////its actually onkeyup but on excluded
+    socket.emit('stoppedTyping', () => {
+    })
+})
+
+$sendLocationButton.addEventListener('click', (e) => {//////////its actually noclick but on excluded
     if (!navigator.geolocation) {
         return alert('geolocation is not supported by your browser...')
     }

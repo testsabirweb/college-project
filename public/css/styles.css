@@ -169,6 +169,15 @@ button:disabled {
     padding: 24px;   
 }
 
+.class_typing{
+    font-weight: 400;
+    font-size: 22px;
+    background: #2c2f3a;
+    padding: 24px; 
+    font-style: italic; 
+    color: rgb(50, 230, 5);
+}
+
 .list-title {
     font-weight: 500;
     font-size: 18px;

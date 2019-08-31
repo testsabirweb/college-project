@@ -66,6 +66,26 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('isTyping', (callback) => {
+        const user = getUser(socket.id)
+        socket.broadcast.to(user.room).emit('roomData', {
+            room: user.room,
+            users: getUsersInRoom(user.room),
+            userIsTyping: user.username + ' is typing...'
+        })
+        callback()
+    })
+
+    socket.on('stoppedTyping', (callback) => {
+        const user = getUser(socket.id)
+        socket.broadcast.to(user.room).emit('roomData', {
+            room: user.room,
+            users: getUsersInRoom(user.room),
+            userIsTyping: ''
+        })
+        callback()
+    })
+
 })
 
 server.listen(port, () => {
