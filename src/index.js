@@ -85,7 +85,6 @@ io.on('connection', (socket) => {
         })
         callback()
     })
-
 })
 
 server.listen(port, () => {
