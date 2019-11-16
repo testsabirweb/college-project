@@ -9,12 +9,14 @@ const $messages = document.querySelector('#messages')
 
 ///         TEMPLATES
 const messageTemplate = document.querySelector('#message-template').innerHTML
+const messageTemplate2 = document.querySelector('#message-template2').innerHTML
 const locationTemplate = document.querySelector('#location-template').innerHTML
+const locationTemplate2 = document.querySelector('#location-template2').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 
 ///         options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
-
+const windowName = username;///it provides the name of the user who is using the current window 
 const autoScroll = () => {
     ///new message element
     const $newMessage = $messages.lastElementChild
@@ -40,24 +42,46 @@ const autoScroll = () => {
 
 socket.on('display_msg', (message) => {
     console.log(message)
-    const html = Mustache.render(messageTemplate, {
-        username: message.username,
-        msg: message.text,
-        createdAt: moment(message.createdAt).format('h:mm a')
-    })
-    $messages.insertAdjacentHTML('beforeend', html)
-    autoScroll()
+    if (message.username === windowName) {
+        const html = Mustache.render(messageTemplate, {
+            username: message.username,
+            msg: message.text,
+            createdAt: moment(message.createdAt).format('h:mm a')
+        })
+        $messages.insertAdjacentHTML('beforeend', html)
+        autoScroll()
+    }
+    else {
+        const html = Mustache.render(messageTemplate2, {
+            username: message.username,
+            msg: message.text,
+            createdAt: moment(message.createdAt).format('h:mm a')
+        })
+        $messages.insertAdjacentHTML('beforeend', html)
+        autoScroll()
+    }
 })
 
 socket.on('locationMSG', (message) => {
     console.log(message)
-    const html = Mustache.render(locationTemplate, {
-        username: message.username,
-        loc: message.url,
-        createdAt: moment(message.createdAt).format('h:mm a')
-    })
-    $messages.insertAdjacentHTML('beforeend', html)
-    autoScroll()
+    if (message.username === windowName) {
+        const html = Mustache.render(locationTemplate, {
+            username: message.username,
+            loc: message.url,
+            createdAt: moment(message.createdAt).format('h:mm a')
+        })
+        $messages.insertAdjacentHTML('beforeend', html)
+        autoScroll()
+    }
+    else {
+        const html = Mustache.render(locationTemplate2, {
+            username: message.username,
+            loc: message.url,
+            createdAt: moment(message.createdAt).format('h:mm a')
+        })
+        $messages.insertAdjacentHTML('beforeend', html)
+        autoScroll()
+    }
 })
 
 socket.on('roomData', ({ room, users, userIsTyping }) => {

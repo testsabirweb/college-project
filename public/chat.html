@@ -40,8 +40,29 @@
         </div>
     </script>
 
+    <script id="message-template2" type="text/html">
+        <div class="message2">
+            <p>
+                <span class="message__name">{{username}}</span>
+                <span class="message__meta">{{createdAt}}</span>
+            </p>
+            <p>{{msg}}</p>
+        </div>
+    </script>
+
     <script id="location-template" type="text/html">
         <div class="message">
+            <p>
+                <span class="message__name">{{username}}</span>
+                <span class="message__meta">{{createdAt}}</span>
+            </p>
+            <p>
+                <a href="{{loc}}" target="_blank">my location</a><!--target=_blank opens the window in a new tab-->
+            </p>
+        </div>
+    </script>
+    <script id="location-template2" type="text/html">
+        <div class="message2">
             <p>
                 <span class="message__name">{{username}}</span>
                 <span class="message__meta">{{createdAt}}</span>
